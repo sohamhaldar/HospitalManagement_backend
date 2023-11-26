@@ -1,8 +1,8 @@
 import mongoose,{ Schema,model } from "mongoose";
+import Jwt from "jsonwebtoken";
 
 const patientSchema=Schema(
     {
-
         fullName:{
             type:String,
             required:true
@@ -20,43 +20,21 @@ const patientSchema=Schema(
         password:{
             type:String,
             required:true
-        },
-        Appointments:[{
-            doctor_name:{
-                type:String,
-                required:true
-            },
-            time:{
-                type:Date,
-                required:true
-            }
-        }],
-        History:[
-            {
-                doctor_name:{
-                    type:String,
-                    required:true
-                },
-                disease:{
-                    type:String,
-                    required:true
-                },
-                prescription:[{
-                    type:String
-                }],
-                bill:{
-                    type:Number,
-                    required:true
-                },
-                date:{
-                    type:Date,
-                    required:true
-                }
-
-            }]
+        }    
     },
 {
     timeStamps:true
 }
 );
+patientSchema.methods.generateAccessToken=function(){
+    return Jwt.sign(
+        {
+            _id: this._id,
+            email: this.email,
+        },process.env.SECRET_TOKEN,
+        {
+            expiresIn:process.env.SECRET_TOKEN_EXPIRY_TIME
+        }
+    )
+}
 export const Patient=mongoose.model("Patient",patientSchema);
