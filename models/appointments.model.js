@@ -1,17 +1,33 @@
 import mongoose,{Schema} from "mongoose";
 
 const AppointmentSchema=Schema({
-    id:{
+    doctor:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Patient"
+        ref:"Doctor",
+        required:true
     },
     doctor_name:{
+        type:String,
+        required:true
+    },
+    patient_name:{
         type:String,
         required:true
     },
     time:{
         type:Date,
         required:true
+    },
+    patient:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Patient",
+        required:true
+    },
+    status:{
+        type:String,
+        enum:["pending","completed","cancelled"],
+        default:"pending"    
     }
-},{timeStamps:true})
+},{timeStamps:true});
+
 export const Appointments=mongoose.model("Appointments",AppointmentSchema);

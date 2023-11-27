@@ -15,8 +15,12 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-import Startrouter from "./routes/start.routes.js";
+import PatientStartrouter from "./routes/patient_start.routes.js";
+import Patientrouter from "./routes/patient.routes.js";
+import DoctorStartrouter from "./routes/doctor_start.routes.js"
 
-app.use("/",Startrouter);
+app.use("/patient",PatientStartrouter);
+app.use("/patient/appointment",Patientrouter);
+app.use("/doctor",DoctorStartrouter);
 
 export {app};

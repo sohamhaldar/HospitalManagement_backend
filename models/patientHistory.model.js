@@ -2,7 +2,8 @@ import mongoose,{Schema} from "mongoose";
 
 const patientHistorySchema=Schema({
     doctor_name:{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Doctor",
         required:true
     },
     disease:{
