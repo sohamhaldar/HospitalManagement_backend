@@ -2,7 +2,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { Patient } from "../models/patient.model.js";
 import { PatientHistory } from "../models/patientHistory.model.js";
 // import { Patientappointments } from "../models/patientappointments.model.js";
-import  {Appointments}  from "../models/Appointments.model.js";
+import  {Appointments}  from "../models/appointments.model.js";
 const SignUp=async(req,res,next)=>{
     try{
         // console.log(req.body);
