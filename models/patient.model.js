@@ -3,8 +3,8 @@ import Jwt from "jsonwebtoken";
 
 const patientSchema=Schema(
     {
-        fullName:{
-            type:String,
+        age:{
+            type:Date,
             required:true
         },
         email:{
@@ -31,7 +31,7 @@ patientSchema.methods.generateAccessToken=function(){
         {
             _id: this._id,
             email: this.email,
-            fullName:this.fullName
+            username:this.username
         },process.env.SECRET_TOKEN,
         {
             expiresIn:process.env.SECRET_TOKEN_EXPIRY_TIME

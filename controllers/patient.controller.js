@@ -6,8 +6,8 @@ import  {Appointments}  from "../models/appointments.model.js";
 const SignUp=async(req,res,next)=>{
     try{
         // console.log(req.body);
-        const {username,email,password,fullName}=req.body;
-        if([username,email,password,fullName].some((parameters)=>parameters?.trim()==="")){
+        const {username,email,password,age}=req.body;
+        if([username,email,password,age].some((parameters)=>parameters?.trim()==="")){
             throw new ApiError(400,"All fields are required");
         }
         const existedUser=await Patient.findOne({$or:[{username},{email}]});
@@ -15,7 +15,7 @@ const SignUp=async(req,res,next)=>{
             throw new ApiError(409,"Email or username already exists");
         }
         const patient=await Patient.create({
-            fullName,
+            age,
             email,
             password,
             username
