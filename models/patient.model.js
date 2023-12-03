@@ -4,7 +4,7 @@ import Jwt from "jsonwebtoken";
 const patientSchema=Schema(
     {
         age:{
-            type:Date,
+            type:String,
             required:true
         },
         email:{
