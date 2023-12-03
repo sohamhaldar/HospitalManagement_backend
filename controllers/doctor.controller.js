@@ -56,5 +56,17 @@ const Login=async(req,res,next)=>{
         next(err);
     }
 }
+const getDoctors=async(req,res,next)=>{
+    try{
+        const doctors=await Doctor.find();
+        res.status(200).json({
+            status:true,
+            data:doctors
+        })
+    }
+    catch(err){
+        next(err)
+    }
+}
 
-export {SignUp,Login}
+export {SignUp,Login,getDoctors}
