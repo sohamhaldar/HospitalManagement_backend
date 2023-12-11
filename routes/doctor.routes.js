@@ -1,9 +1,12 @@
 import {Router} from "express";
-import { getDoctors } from "../controllers/doctor.controller.js";
-
+import { getDoctors,getAppointments,getPatientHistory,completeAppointment,AdmitPatient} from "../controllers/doctor.controller.js";
 
 const router=Router();
 router.route("/getDoctors").get(getDoctors);
+router.route("/getAppointments").get(getAppointments);
+router.route("/getPatientHistory").get(getPatientHistory);
+router.route("/completeAppointment").post(completeAppointment);
+router.route("/admitPatient").post(AdmitPatient);
 // router.route("/addAppointment").post(AddApointment);
 
 export default router;

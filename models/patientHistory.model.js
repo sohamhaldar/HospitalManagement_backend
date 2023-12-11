@@ -6,6 +6,10 @@ const patientHistorySchema=Schema({
         ref:"Doctor",
         required:true
     },
+    patient:{
+        type:String,
+        required:true
+    },
     disease:{
         type:String,
         required:true

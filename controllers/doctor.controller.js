@@ -1,6 +1,10 @@
 import { ApiError } from "../utils/ApiError.js";
 import { Doctor } from "../models/doctor.model.js";
 import { DoctorHelp } from "../models/doctorHelp.model.js";
+import  {Appointments}  from "../models/appointments.model.js";
+import { PatientHistory } from "../models/patientHistory.model.js";
+import { Hospital } from "../models/hospital.model.js";
+
 
 const SignUp=async(req,res,next)=>{
     try{
@@ -65,8 +69,83 @@ const getDoctors=async(req,res,next)=>{
         })
     }
     catch(err){
-        next(err)
+        next(err);
+    }
+}
+const getAppointments=async(req,res,next)=>{
+    try{
+        const {doctor}=req.body;
+        const appointments=await Appointments.find({doctor:doctor,status:"pending"});
+        res.status(200).json({
+            status:true,
+            data:appointments
+        })        
+    }catch(error){
+       next(error); 
+    }
+}
+const getPatientHistory=async(req,res,next)=>{
+    try{
+        const {patient,doctor}=req.body;
+        const doctor_patients=await PatientHistory.find({patient:patient,doctor_name:doctor});
+        res.status(200).json({
+            status:true,
+            data:doctor_patients
+        })    
+    }catch(error){
+        next(error);
+    }
+}
+const completeAppointment=async(req,res,next)=>{
+    try{
+        const {patient,doctor,_id,disease,medicine_names,quantity,medicine_price,fees}=req.body;
+        const appointment=await Appointments.update({_id:_id},{$set:{status:"complete"}});
+        const patientHistory=await PatientHistory.create({
+            patient:patient,
+            doctor_name:doctor,
+            disease:disease,
+            prescription:medicine_names,
+            bill:medicine_price+fees,
+            date:Date.now()
+        });
+        res.status(200).json({
+            status:true,
+            data:"Appointment completed"
+        })
+    }catch(error){
+        next(error);
     }
 }
 
-export {SignUp,Login,getDoctors}
+const AdmitPatient=async(req,res,next)=>{
+    try{
+        const {patient,doctor,disease}=req.body;
+        const hospital=await Hospital.find();
+        if(hospital=={}){
+            console.log("making hospital");
+            const hospital=await Hospital.create({
+                HospitalBeds:1000,
+                AdmittedPatientsNo:1
+            });
+            const createdHospital=await Hospital.findById(hospital._id);
+            if(!createdHospital){
+                throw new ApiError(500,"Some error occured please try again");
+            }
+        }
+        const admit=hospital.update({},{$inc:{AdmittedPatientsNo:1}},{$push:{
+            AdmittedPatients:{
+                patient:patient,
+                doctor:doctor,
+                disease:disease
+            }
+        }})
+        res.status(200).json({
+            status:true,
+            data:"Admitted succesfully"
+        })
+        
+    }catch(error){
+       next(error);   
+    }
+}
+export {SignUp,Login,getDoctors,getAppointments,completeAppointment,getPatientHistory,AdmitPatient}

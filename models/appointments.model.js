@@ -31,4 +31,3 @@ const AppointmentSchema=Schema({
 },{timeStamps:true});
 
 export const Appointments=mongoose.model("Appointments",AppointmentSchema);
-//

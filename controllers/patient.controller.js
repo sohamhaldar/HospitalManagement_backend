@@ -98,7 +98,7 @@ const AddApointment=async(req,res,next)=>{
 const getAppointments=async(req,res,next)=>{
     try{
         const {patient}=req.body;
-        const appointments=await Appointments.find({patient});
+        const appointments=await Appointments.find({patient:patient,status:"pending"});
         res.status(200).json({
             status:true,
             data:appointments
