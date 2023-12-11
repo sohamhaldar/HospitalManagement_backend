@@ -107,8 +107,20 @@ const getAppointments=async(req,res,next)=>{
        next(error); 
     }
 }
+const cancelAppointment=async(req,res,next)=>{
+    try{
+        const {appointment}=req.body;
+        const data=await Appointments.deleteOne({_id:appointment});
+        res.status(200).json({
+            status:true,
+            data:"Appointment cancelled"
+        })
+        
+    }catch(error){
+       next(error); 
+    }
+}
 
 
 
-
-export {SignUp,Login,getAppointments,AddApointment}
+export {SignUp,Login,getAppointments,AddApointment,cancelAppointment}
