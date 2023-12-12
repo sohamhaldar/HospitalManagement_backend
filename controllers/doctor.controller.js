@@ -86,8 +86,9 @@ const getAppointments=async(req,res,next)=>{
 }
 const getPatientHistory=async(req,res,next)=>{
     try{
-        const {patient,doctor}=req.body;
-        const doctor_patients=await PatientHistory.find({patient:patient,doctor_name:doctor});
+        // const {patient,doctor}=req.body;
+        const {doctor}=req.body;
+        const doctor_patients=await PatientHistory.find({doctor_name:doctor});
         res.status(200).json({
             status:true,
             data:doctor_patients
