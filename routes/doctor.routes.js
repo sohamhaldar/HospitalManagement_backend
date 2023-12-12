@@ -3,8 +3,8 @@ import { getDoctors,getAppointments,getPatientHistory,completeAppointment,AdmitP
 
 const router=Router();
 router.route("/getDoctors").get(getDoctors);
-router.route("/getAppointments").get(getAppointments);
-router.route("/getPatientHistory").get(getPatientHistory);
+router.route("/getAppointments").post(getAppointments);
+router.route("/getPatientHistory").post(getPatientHistory);
 router.route("/completeAppointment").post(completeAppointment);
 router.route("/admitPatient").post(AdmitPatient);
 // router.route("/addAppointment").post(AddApointment);
