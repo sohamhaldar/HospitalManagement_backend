@@ -83,9 +83,10 @@ const getMedicines=async(req,res,next)=>{
                 throw new ApiError(500,"Some error occured please try again");
             }
         }
+        const medicines=hospital[0].medicines
         res.status(200).json({
             status:true,
-            data:hospital
+            data:medicines
         })
     }catch(error){
         next(error);
