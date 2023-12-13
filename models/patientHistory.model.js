@@ -14,9 +14,9 @@ const patientHistorySchema=Schema({
         type:String,
         required:true
     },
-    prescription:{
+    prescription:[{
         type:String
-    },
+    }],
     bill:{
         type:Number,
         required:true
