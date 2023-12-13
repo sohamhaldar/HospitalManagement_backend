@@ -107,6 +107,11 @@ const completeAppointment=async(req,res,next)=>{
         const p_name=p[0].username;
         const disease=d[0].speciality;
         console.log(disease);
+        const date = new Date();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        let currentDate = `${day}-${month}-${year}`;
         const patientHistory=await PatientHistory.create({
             patient:patient,
             doctor_name:doctor,
@@ -114,7 +119,7 @@ const completeAppointment=async(req,res,next)=>{
             disease:disease,
             prescription:medicine_names,
             bill:parseInt(medicine_price)+parseInt(fees),
-            date:Date.now()
+            date:currentDate.toString()
         });
         res.status(200).json({
             status:true,

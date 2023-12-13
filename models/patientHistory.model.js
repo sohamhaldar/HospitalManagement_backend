@@ -26,7 +26,7 @@ const patientHistorySchema=Schema({
         required:true
     },
     date:{
-        type:Date,
+        type:String,
         required:true
     }
 
