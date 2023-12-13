@@ -100,15 +100,16 @@ const getPatientHistory=async(req,res,next)=>{
 const completeAppointment=async(req,res,next)=>{
     try{
         const {patient,doctor,_id,medicine_names,medicine_price,fees}=req.body;
-        const appointment=await Appointments.update({_id:_id},{$set:{status:"complete"}});
+        const appointment=await Appointments.updateOne({_id:_id},{$set:{status:"complete"}});
         const d=await Doctor.find({_id:doctor});
-        const disease=d.speciality;
+        const disease=d[0].speciality;
+        console.log(disease);
         const patientHistory=await PatientHistory.create({
             patient:patient,
             doctor_name:doctor,
             disease:disease,
             prescription:medicine_names,
-            bill:medicine_price+fees,
+            bill:parseInt(medicine_price)+fees,
             date:Date.now()
         });
         res.status(200).json({
