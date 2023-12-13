@@ -39,9 +39,9 @@ const Addmedicines=async(req,res,next)=>{
                 throw new ApiError(500,"Some error occured please try again");
             }
         }
-        medicine=await hospital.find({"medicines.name":name});
-        if(!medicine){
-            await hospital.find({
+        // medicine=await hospital[0].medicines.some(e => e.name == name);
+        if(!await hospital[0].medicines.some(e => e.name == name)){
+            await Hospital.findOneAndUpdate({},{
                 $push:{
                     medicines:{
                         name:name,
@@ -53,9 +53,9 @@ const Addmedicines=async(req,res,next)=>{
             })
         }
         else{
-            await hospital.updateOne({"medicines.name":name},{
+            await Hospital.updateOne({"medicines.name":name},{
                 $inc:{
-                    quantity:quantity
+                    "medicines.$.quantity":quantity
                 }
             })
         };
@@ -93,4 +93,4 @@ const getMedicines=async(req,res,next)=>{
     }
 }
 
-export {getMedicines}
+export {getMedicines,Addmedicines}
