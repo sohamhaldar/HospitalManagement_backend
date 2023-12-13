@@ -4,6 +4,7 @@ import { DoctorHelp } from "../models/doctorHelp.model.js";
 import  {Appointments}  from "../models/appointments.model.js";
 import { PatientHistory } from "../models/patientHistory.model.js";
 import { Hospital } from "../models/hospital.model.js";
+import { Patient } from "../models/patient.model.js";
 
 
 const SignUp=async(req,res,next)=>{
@@ -102,11 +103,14 @@ const completeAppointment=async(req,res,next)=>{
         const {patient,doctor,_id,medicine_names,medicine_price,fees}=req.body;
         const appointment=await Appointments.updateOne({_id:_id},{$set:{status:"complete"}});
         const d=await Doctor.find({_id:doctor});
+        const p=await Patient.find({_id:patient});
+        const p_name=p[0].username;
         const disease=d[0].speciality;
         console.log(disease);
         const patientHistory=await PatientHistory.create({
             patient:patient,
             doctor_name:doctor,
+            patient_name:p_name,
             disease:disease,
             prescription:medicine_names,
             bill:parseInt(medicine_price)+parseInt(fees),

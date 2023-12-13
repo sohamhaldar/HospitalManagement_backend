@@ -10,6 +10,10 @@ const patientHistorySchema=Schema({
         type:String,
         required:true
     },
+    patient_name:{
+        type:String,
+        required:true
+    },
     disease:{
         type:String,
         required:true
