@@ -109,7 +109,7 @@ const completeAppointment=async(req,res,next)=>{
             doctor_name:doctor,
             disease:disease,
             prescription:medicine_names,
-            bill:parseInt(medicine_price)+fees,
+            bill:parseInt(medicine_price)+parseInt(fees),
             date:Date.now()
         });
         res.status(200).json({
